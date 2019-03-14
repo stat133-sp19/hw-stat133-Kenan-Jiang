@@ -22,11 +22,11 @@ Each .csv file, in columns, contains same information in sequence for its corres
 Analysis
 --------
 
-First, I need do de some data cleaning to these five .csv files. I added a new column called **name** in each of the data, storing the name of the player in it. Since the time of the shot is provided by three columns, it is not too obvious to obtain the information. I, again, added another column called **minute** to document the excatly minute of the shot after some calculation. Then I output the summary of these files into my output folder. Then I combined those five .csv files into one big .csv file using rbind, and stored this new file along with other .csv files in the data folder. Then I output a summary file in the output folder. Now we are all set to make some visulizations.
+First, I need do de some data cleaning to these five .csv files. I added a new column called **name** in each of the data, storing the name of the player in it. Since the time of the shot is provided by three columns, it is not too obvious to obtain the information. I, again, added another column called **minute** to document the exactly minute of the shot after some calculation. Then I output the summary of these files into my output folder. Then I combined those five .csv files into one big .csv file using rbind, and stored this new file along with other .csv files in the data folder. Then I output a summary file in the output folder. Now we are all set to make some visualizations.
 
-Now we want to see the position in which each player often shoot the basket. Firstly, I choose to use ggplot function to create a shot chart for each player, using the x, y column is the .csv file. To make it easier for our readers to identify where on the court those shots happened, I added a picture of basketball court as the background of our shot chart. Then we have a delicate chart for each player. We put these charts in one graph. <img src="../images/gsw-shot-charts.jpg" width="80%" style="display: block; margin: auto;" /> From the chart above, one would notice that Durant, Thompson, and Curry have maken many attampts to shoot the basket in 2016 season. Compared to them, Iguodala and Green shooted less. Comparing the distribution of the dots, we can see each player's perferable shooting location. Iguodala liked to shoot from the corner. Green perfered to shhot from wing, top of the circle, and three second area. Durant, Thompson, and Curry did not seem to have a prefered location. They shoot anywhere on the court.
+Now we want to see the position in which each player often shoots the basket. Firstly, I choose to use ggplot function to create a shot chart for each player, using the x, y column is the .csv file. To make it easier for our readers to identify where on the court those shots happened, I added a picture of basketball court as the background of our shot chart. Then we have a delicate chart for each player. We put these charts in one graph. <img src="../images/gsw-shot-charts.jpg" width="80%" style="display: block; margin: auto;" /> From the chart above, one would notice that Durant, Thompson, and Curry have make many attempts to shoot the basket in 2016 season. Compared to them, Iguodala and Green shot less. Comparing the distribution of the dots, we can see each player's preferable shooting location. Iguodala liked to shoot from the corner. Green preferred to shot from wing, top of the circle, and three second area. Durant, Thompson, and Curry did not seem to have a preferred location. They shoot anywhere on the court.
 
-Well, the accuracy is important to a basketball player. It might be hard to obtain the accuracy rate of each player's shot, so I produced these following tables to present how each player behaved in 2 pointers, 3 pinters, and total shots. I used the shots-data.csv created by combining the five individual files to make these table. Use the dyplr library, we can get summarize the dataset group by the name of the player. <img src="../images/players.jpg" width="80%" style="display: block; margin: auto;" />
+Well, the accuracy is important to a basketball player. It might be hard to obtain the accuracy rate of each player's shot, so I produced these following tables to present how each player behaved in 2 pointers, 3 pointers, and total shots. I used the shots-data.csv created by combining the five individual files to make these table. Use the dplyr library, we can get summarize the dataset group by the name of the player. <img src="../images/players.jpg" width="80%" style="display: block; margin: auto;" />
 
 ##### 2PT Effective Shooting % by Players
 
@@ -46,7 +46,7 @@ two_pt
     ## 4 Klay Thompson    640   329     0.514
     ## 5 Draymond Green   346   171     0.494
 
-From the table above, one can see that in 2016 season, Andre Iguodala had the highest accuracy when it comes to shooting 2-pointers. Only based on these numbers, surprisingly, Durant had both a larger total shot and made shot than Curry. This might suggests Durant did better in 2-pointers than Curry did.
+From the table above, one can see that in 2016 season, Andre Iguodala had the highest accuracy when it comes to shooting 2-pointers. Only based on these numbers, surprisingly, Durant had both a larger total shot and made shot than Curry. This might suggest Durant did better in 2-pointers than Curry did.
 
 ##### 3PT Effective Shooting % by Players
 
@@ -65,7 +65,7 @@ three_pt
     ## 4 Andre Iguodala   161    58     0.360
     ## 5 Draymond Green   232    74     0.319
 
-From this 3 pt table above, one can see that Klay Thompson had the highest accurancy rate. Notably, Curry attamptted to shoot lots of 3 points, and he mode the most 3 points among the five players. Curry had a higher accurancy than Durant when it comes to comparing three points.
+From this 3 pt table above, one can see that Klay Thompson had the highest accuracy rate. Notably, Curry attempted to shoot lots of 3 points, and he mode the most 3 points among the five players. Curry had a higher accuracy than Durant when it comes to comparing three points.
 
 ##### Effective Shooting % by Players
 
@@ -84,14 +84,14 @@ total_pt
     ## 4 Stephen Curry   1250   584     0.467
     ## 5 Draymond Green   578   245     0.424
 
-The table above shows that, in general, Durant had the highest shooting accurancy in 2016 season. Surprisingly, Curry's shooting accurancy only ranked the forth among the accurancy of the five players. How did this happen? Let's take a deep thought.
+The table above shows that, in general, Durant had the highest shooting accuracy in 2016 season. Surprisingly, Curry's shooting accuracy only ranked the fourth among the accuracy of the five players. How did this happen? Let's take a deep thought.
 
 Discussion
 ----------
 
-Just now, the Effective Shooting % by Players table throws us an interesting problem: *Why did Curry have such low accurancy?* Personally, I think the reason might be related to the buiness side of NBA games. People pays to watch their favorite players to play on court. Curry, a huge star, must have lots of fans coming to the game for him. Then, to please those fans, Curry might be assigned to have more time on the court and have more time to controll the ball. This would lead to making some risky shots during the game. Durant, Iguodala, Curry and others are all great players, but when Curry has to make some uncessary shots, his accuaaracy would get lower for sure.
+Just now, the Effective Shooting % by Players table throws us an interesting problem: *Why did Curry have such low accuracy?* Personally, I think the reason might be related to the business side of NBA games. People pays to watch their favorite players to play on court. Curry, a huge star, must have lots of fans coming to the game for him. Then, to please those fans, Curry might be assigned to have more time on the court and have more time to control the ball. This would lead to making some risky shots during the game. Durant, Iguodala, Curry and others are all great players, but when Curry has to make some unnecessary shots, his accuracy would get lower for sure.
 
 Conclusion
 ----------
 
-In this project, I visuilazed the the shooting location of five GSW, and preceived the shooting accurancy of each player. Due to the different position they play, each players have different shooting pattern. **It is important to realize that all the players are important to the game. Working together, they keep on creating those breath-taking momnets in NBA history.**
+In this project, I visuilazed the the shooting location of five GSW, and preceived the shooting accurancy of each player. Due to the different position they play, each players have different shooting pattern. **It is important to realize that all the players are important to the game. Working together, they keep on creating those breath-taking moments in NBA history.**

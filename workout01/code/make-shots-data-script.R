@@ -1,5 +1,7 @@
-
-#title:
+#title: make short datasets
+#description: process the the five .csv files, give summary for each
+#input: .csv files for five players
+#output: .txt files as summary, .csv as a combined dataset
 
 library(dplyr)
 iguodala <- read.csv("../data/andre-iguodala.csv", stringsAsFactors = FALSE)

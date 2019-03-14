@@ -1,3 +1,8 @@
+#title: make charts
+#description: make shooting charts
+#input: .csv files for five players
+#output: .pdf and .jpg file
+
 library(jpeg)
 library(grid)
 library(dplyr)
