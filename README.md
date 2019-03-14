@@ -4,7 +4,7 @@ Private Repository for HW assignments of Stat 133 (Spring 2019)
 
 - Name: Kenan Jiang
 - Github username: Kenan-Jiang
-- Email: kenanj11 [at] berkeley.edu
+- Email: kenanj11@berkeley.edu
 - Lab section: 107
 - GSI: Dodo Qian
 
