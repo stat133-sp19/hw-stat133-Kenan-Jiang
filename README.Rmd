@@ -1,0 +1,63 @@
+---
+output:
+  github_document:
+    html_preview: false
+---
+
+```{r, echo = FALSE}
+knitr::opts_chunk$set(
+  collapse = TRUE,
+  comment = "#>",
+  fig.path = "README-"
+)
+```
+
+
+## Overview
+
+`"binomial"` is a minimal [R](http://www.r-project.org/) package 
+that provides function for binomial distribution.
+
+* `bin_choose()` allows you to calulate the number of combinations
+* `toss()` tosses a coin object, producing a `"toss"` object.
+* `plot()` method for a `"toss"` object to plot frequencies of heads.
+* `summary()` method for a `"toss"` object.
+
+
+## Motivation
+
+This package is created to help people calculate values in binomial distribution
+
+## Installation
+
+Install the development version from GitHub via the package `"devtools"`:
+
+```r
+# development version from GitHub:
+#install.packages("devtools") 
+# install "binomial" (without vignettes)
+devtools::install_github("Kenan-Jiang/binomial")
+# install "binomia" (with vignettes)
+devtools::install_github("Kenan-Jiang/binomial", build_vignettes = TRUE)
+```
+
+
+## Usage
+
+```{r}
+library(cointoss)
+# default coin
+coin1 <- coin()
+coin1
+# 1 toss of coin1
+toss(coin1)
+# 10 tosses of coin1
+toss10 <- toss(coin1, times = 10)
+toss10
+# summary
+summary(toss10)
+# 100 tosses
+toss100 <- toss(coin1, times = 100)
+# summary
+summary(toss100)
+```

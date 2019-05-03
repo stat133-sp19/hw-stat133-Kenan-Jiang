@@ -1,0 +1,21 @@
+Package: binomial
+Type: Package
+Title: Binomial Distribution
+Version: 0.1.0
+Authors@R: person("Kenan", "Jiang", email = "kenanj11@berkeley.edu",
+                  role = c("aut", "cre"))
+Description: Provides functions to calculate probability.
+Depends:
+    R (>= 3.1.0)
+License: GPL-2
+Encoding: UTF-8
+LazyData: false
+Collate:
+    private.R
+    method.R
+    main.R
+RoxygenNote: 6.1.1
+Suggests: knitr,
+    rmarkdown,
+    testthat
+VignetteBuilder: knitr
