@@ -1,0 +1,512 @@
+bin_distribution <- function(trials, prob) {
+success <- 0:trials
+probability <- bin_probability(success, trials, prob)
+result <- data.frame(success, probability)
+class(result) <- c("bindis", "data.frame")
+return (result)
+}
+library(ggplot2)
+plot.bindis <- function(data) {
+ggplot(data, aes(x = data$success, y = data$probability)) +
+geom_bar(stat="identity") + labs(x = "success", y = "probablility") + ggtitle("binomial probability distribution")
+}
+bin_cumulative <- function(trials, prob) {
+success <- 0:trials
+probability <- bin_probability(success, trials, prob)
+cumulative <- probability
+for (i in seq(2, length(cumulative))) {
+cumulative[i] <- cumulative[i] + cumulative[i-1]
+}
+result <- data.frame(success, probability, cumulative)
+class(result) <- c("bincum", "data.frame")
+return(result)
+}
+plot.bincum <- function(data) {
+ggplot(data, aes(x = data$success, y = data$cumulative)) +
+geom_line(stat="identity") + labs(x = "success", y = "probablility") + geom_point(shape=1) +  ggtitle("binomial cumulative distribution")
+}
+bin_variable <- function(trials, prob) {
+if (check_trials(trials)){
+if (check_prob(prob)) {
+result <- list(trials = trials, prob = prob)
+class(result) <- "binvar"
+return(result)
+}
+}
+}
+print.binvar <- function(result) {
+cat('"Binomial variable"\n\n')
+cat('Paramaters\n')
+cat('- number of trials:', result[[1]], '\n')
+cat('- prob of success:', result[[2]])
+}
+summary.binvar <- function(result){
+mean <- aux_mean(result[[1]], result[[2]])
+var <- aux_variance(result[[1]], result[[2]])
+mode <- aux_mode(result[[1]], result[[2]])
+ske <- aux_skewness(result[[1]], result[[2]])
+kur <- aux_kurtosis(result[[1]], result[[2]])
+sum <- list(trials = result[[1]], prob = result[[2]], mean = mean, variance = var, mode = mode, skewness = ske, kurtosis = kur)
+class(sum) <- "summary.binvar"
+return(sum)
+}
+print.summary.binvar <- function(result) {
+cat('"Summary Binomial"\n\n')
+cat('Paramaters\n')
+cat('- number of trials:', result[[1]], '\n')
+cat('- prob of success:', result[[2]], '\n\n')
+cat('Measures\n')
+cat('- mean    :', result[[3]], '\n')
+cat('- variance:', result[[4]], '\n')
+cat('- mode    :', result[[5]], '\n')
+cat('- skewness:', result[[6]], '\n')
+cat('- kurtosis:', result[[7]], '\n')
+}
+bin_mean <- function(trials, prob){
+if (check_trials(trials)){
+if(check_prob(prob)){
+return (aux_mean(trials, prob))
+}
+}
+}
+bin_variance <- function(trials, prob){
+if (check_trials(trials)){
+if(check_prob(prob)){
+return (aux_variance(trials, prob))
+}
+}
+}
+bin_mode <- function(trials, prob){
+if (check_trials(trials)){
+if(check_prob(prob)){
+return (aux_mode(trials, prob))
+}
+}
+}
+bin_skewness <- function(trials, prob){
+if (check_trials(trials)){
+if(check_prob(prob)){
+return (aux_skewness(trials, prob))
+}
+}
+}
+bin_kurtosis <- function(trials, prob){
+if (check_trials(trials)){
+if(check_prob(prob)){
+return (aux_kurtosis(trials, prob))
+}
+}
+}
+bin_distribution(1, 0.7)
+a <- data.frame(success=c(0, 1), probability=c(0.3, 0.7))
+class(a) <- c("bindis", "data.frame")
+a == bin_distribution(1, 0.7)
+bin_variable(1, 2)
+bin_variable(3, 0.2)
+bin_variable(4, 0.8)
+bin_choose(n = 5, k = 2)
+#check whether prob is valid
+check_prob <- function(prob){
+if (prob > 0 && prob < 1){
+return (TRUE)
+}
+else {
+stop("invalid prob value")
+}
+}
+#check whether trials is valid
+check_trials <- function(trials){
+if (trials >= 0){
+return (TRUE)
+}
+else {
+stop("invalid trials value")
+}
+}
+#check whether success is valid
+check_success <- function(success, trials){
+for (i in success) {
+if (!is.numeric(i)){
+stop("invalid success value")
+}
+if (i > trials) {
+stop("invalid success value")
+}
+}
+return (TRUE)
+}
+aux_mean <- function(trials, prob) {
+return (trials * prob)
+}
+aux_variance <- function(trials, prob) {
+return (trials * prob * (1 - prob))
+}
+aux_mode <- function(trials, prob) {
+m <- as.integer(trials * prob + prob)
+return (m)
+}
+aux_skewness <- function(trials, prob) {
+one <- 1 - 2 * prob
+two <- sqrt(trials * prob * (1 - prob))
+return (one / two)
+}
+aux_kurtosis <- function(trials, prob) {
+one <- 1 - 6 * prob * (1 - prob)
+two <- trials * prob * (1 - prob)
+return (one / two)
+}
+bin_choose <- function(n, k) {
+for (i in k) {
+if (i > n) {
+stop("k cannot be greater than n")
+}
+}
+k_fac <- factorial(k)
+n_k <- factorial(n - k)
+n_fac <- factorial(n)
+return (n_fac/(k_fac* n_k))
+}
+bin_probability <- function(success, trials, prob) {
+if (check_trials(trials)) {
+if (check_prob(prob)){
+if(check_success(success, trials)){
+first <- bin_choose(trials, success)
+second <- prob ** success
+third <- (1 - prob) ** (trials - success)
+return (first *second * third)
+}
+}
+}
+}
+bin_distribution <- function(trials, prob) {
+success <- 0:trials
+probability <- bin_probability(success, trials, prob)
+result <- data.frame(success, probability)
+class(result) <- c("bindis", "data.frame")
+return (result)
+}
+library(ggplot2)
+plot.bindis <- function(data) {
+ggplot(data, aes(x = data$success, y = data$probability)) +
+geom_bar(stat="identity") + labs(x = "success", y = "probablility") + ggtitle("binomial probability distribution")
+}
+bin_cumulative <- function(trials, prob) {
+success <- 0:trials
+probability <- bin_probability(success, trials, prob)
+cumulative <- probability
+for (i in seq(2, length(cumulative))) {
+cumulative[i] <- cumulative[i] + cumulative[i-1]
+}
+result <- data.frame(success, probability, cumulative)
+class(result) <- c("bincum", "data.frame")
+return(result)
+}
+plot.bincum <- function(data) {
+ggplot(data, aes(x = data$success, y = data$cumulative)) +
+geom_line(stat="identity") + labs(x = "success", y = "probablility") + geom_point(shape=1) +  ggtitle("binomial cumulative distribution")
+}
+bin_variable <- function(trials, prob) {
+if (check_trials(trials)){
+if (check_prob(prob)) {
+result <- list(trials = trials, prob = prob)
+class(result) <- "binvar"
+return(result)
+}
+}
+}
+print.binvar <- function(result) {
+cat('"Binomial variable"\n\n')
+cat('Paramaters\n')
+cat('- number of trials:', result[[1]], '\n')
+cat('- prob of success:', result[[2]])
+}
+summary.binvar <- function(result){
+mean <- aux_mean(result[[1]], result[[2]])
+var <- aux_variance(result[[1]], result[[2]])
+mode <- aux_mode(result[[1]], result[[2]])
+ske <- aux_skewness(result[[1]], result[[2]])
+kur <- aux_kurtosis(result[[1]], result[[2]])
+sum <- list(trials = result[[1]], prob = result[[2]], mean = mean, variance = var, mode = mode, skewness = ske, kurtosis = kur)
+class(sum) <- "summary.binvar"
+return(sum)
+}
+print.summary.binvar <- function(result) {
+cat('"Summary Binomial"\n\n')
+cat('Paramaters\n')
+cat('- number of trials:', result[[1]], '\n')
+cat('- prob of success:', result[[2]], '\n\n')
+cat('Measures\n')
+cat('- mean    :', result[[3]], '\n')
+cat('- variance:', result[[4]], '\n')
+cat('- mode    :', result[[5]], '\n')
+cat('- skewness:', result[[6]], '\n')
+cat('- kurtosis:', result[[7]], '\n')
+}
+bin_mean <- function(trials, prob){
+if (check_trials(trials)){
+if(check_prob(prob)){
+return (aux_mean(trials, prob))
+}
+}
+}
+bin_variance <- function(trials, prob){
+if (check_trials(trials)){
+if(check_prob(prob)){
+return (aux_variance(trials, prob))
+}
+}
+}
+bin_mode <- function(trials, prob){
+if (check_trials(trials)){
+if(check_prob(prob)){
+return (aux_mode(trials, prob))
+}
+}
+}
+bin_skewness <- function(trials, prob){
+if (check_trials(trials)){
+if(check_prob(prob)){
+return (aux_skewness(trials, prob))
+}
+}
+}
+bin_kurtosis <- function(trials, prob){
+if (check_trials(trials)){
+if(check_prob(prob)){
+return (aux_kurtosis(trials, prob))
+}
+}
+}
+bin_distribution(1, 0.7)
+bin_variable(4, 0.8)
+bin_probability(success=2, trials=5, prob=0.5)
+bin_variance(5, 0.5)
+bin_mode(5, 0.5)
+bin_skewness(5, 0.5)
+bin_skewness(5, 0.5)
+bin_kurtosis(5, 0.5)
+devtools::document()
+ls
+install.packages(devtools)
+install.packages(devtools)
+ls
+ls
+devtools::install_github("hadley/devtools")
+library(devtools)
+install.packages('devtools',dependencies = T)
+devtools::document()
+cd
+ls
+getwd
+getwd
+getwd
+ls()
+q()
+ls()
+getwd()
+setwd("/Users/kenanjiang/Desktop/Stat 133/")
+devtools::document()
+setwd("/Users/kenanjiang/Desktop/Stat 133/binomial")
+devtools::document()
+devtools::check_man()
+devtools::test()
+devtools::test()
+devtools::test()
+devtools::build_vignettes()
+devtools::build_vignettes()
+bin_mean(trails = 10, prob = 0.3)
+knitr::opts_chunk$set(collapse = T, comment = "#>")
+library(binomial)
+bin_mean(trails = 10, prob = 0.3)
+bin_mean(trails = 10, prob = 0.3)
+bin_mean(trails = 10, prob = 0.3)
+bin_mean(trails = 10, prob = 0.3)
+bin_mean(trails = 10, prob = 0.3)
+bin_mean(trails = 10, prob = 0.3)
+bin_mean(trails = 10, prob = 0.3)
+bin_mean(trials = 10, prob = 0.3)
+devtools::build_vignettes()
+devtools::build()
+devtools::install()
+devtools::check()
+devtools::check()
+devtools::check()
+devtools::check()
+devtools::check()
+devtools::check()
+#check whether prob is valid
+check_prob <- function(prob){
+if (prob > 0 && prob < 1){
+return (TRUE)
+}
+else {
+stop("invalid prob value")
+}
+}
+#check whether trials is valid
+check_trials <- function(trials){
+if (trials >= 0){
+return (TRUE)
+}
+else {
+stop("invalid trials value")
+}
+}
+#check whether success is valid
+check_success <- function(success, trials){
+for (i in success) {
+if (!is.numeric(i)){
+stop("invalid success value")
+}
+if (i > trials) {
+stop("invalid success value")
+}
+}
+return (TRUE)
+}
+aux_mean <- function(trials, prob) {
+return (trials * prob)
+}
+aux_variance <- function(trials, prob) {
+return (trials * prob * (1 - prob))
+}
+aux_mode <- function(trials, prob) {
+m <- as.integer(trials * prob + prob)
+return (m)
+}
+aux_skewness <- function(trials, prob) {
+one <- 1 - 2 * prob
+two <- sqrt(trials * prob * (1 - prob))
+return (one / two)
+}
+aux_kurtosis <- function(trials, prob) {
+one <- 1 - 6 * prob * (1 - prob)
+two <- trials * prob * (1 - prob)
+return (one / two)
+}
+bin_choose <- function(n, k) {
+for (i in k) {
+if (i > n) {
+stop("k cannot be greater than n")
+}
+}
+k_fac <- factorial(k)
+n_k <- factorial(n - k)
+n_fac <- factorial(n)
+return (n_fac/(k_fac* n_k))
+}
+bin_probability <- function(success, trials, prob) {
+if (check_trials(trials)) {
+if (check_prob(prob)){
+if(check_success(success, trials)){
+first <- bin_choose(trials, success)
+second <- prob ** success
+third <- (1 - prob) ** (trials - success)
+return (first *second * third)
+}
+}
+}
+}
+bin_distribution <- function(trials, prob) {
+success <- 0:trials
+probability <- bin_probability(success, trials, prob)
+result <- data.frame(success, probability)
+class(result) <- c("bindis", "data.frame")
+return (result)
+}
+library(ggplot2)
+plot.bindis <- function(data) {
+ggplot(data, aes(x = data$success, y = data$probability)) +
+geom_bar(stat="identity") + labs(x = "success", y = "probablility") + ggtitle("binomial probability distribution")
+}
+bin_cumulative <- function(trials, prob) {
+success <- 0:trials
+probability <- bin_probability(success, trials, prob)
+cumulative <- probability
+for (i in seq(2, length(cumulative))) {
+cumulative[i] <- cumulative[i] + cumulative[i-1]
+}
+result <- data.frame(success, probability, cumulative)
+class(result) <- c("bincum", "data.frame")
+return(result)
+}
+plot.bincum <- function(data) {
+ggplot(data, aes(x = data$success, y = data$cumulative)) +
+geom_line(stat="identity") + labs(x = "success", y = "probablility") + geom_point(shape=1) +  ggtitle("binomial cumulative distribution")
+}
+bin_variable <- function(trials, prob) {
+if (check_trials(trials)){
+if (check_prob(prob)) {
+result <- list(trials = trials, prob = prob)
+class(result) <- "binvar"
+return(result)
+}
+}
+}
+print.binvar <- function(result) {
+cat('"Binomial variable"\n\n')
+cat('Paramaters\n')
+cat('- number of trials:', result[[1]], '\n')
+cat('- prob of success:', result[[2]])
+}
+summary.binvar <- function(result){
+mean <- aux_mean(result[[1]], result[[2]])
+var <- aux_variance(result[[1]], result[[2]])
+mode <- aux_mode(result[[1]], result[[2]])
+ske <- aux_skewness(result[[1]], result[[2]])
+kur <- aux_kurtosis(result[[1]], result[[2]])
+sum <- list(trials = result[[1]], prob = result[[2]], mean = mean, variance = var, mode = mode, skewness = ske, kurtosis = kur)
+class(sum) <- "summary.binvar"
+return(sum)
+}
+print.summary.binvar <- function(result) {
+cat('"Summary Binomial"\n\n')
+cat('Paramaters\n')
+cat('- number of trials:', result[[1]], '\n')
+cat('- prob of success:', result[[2]], '\n\n')
+cat('Measures\n')
+cat('- mean    :', result[[3]], '\n')
+cat('- variance:', result[[4]], '\n')
+cat('- mode    :', result[[5]], '\n')
+cat('- skewness:', result[[6]], '\n')
+cat('- kurtosis:', result[[7]], '\n')
+}
+bin_mean <- function(trials, prob){
+if (check_trials(trials)){
+if(check_prob(prob)){
+return (aux_mean(trials, prob))
+}
+}
+}
+bin_variance <- function(trials, prob){
+if (check_trials(trials)){
+if(check_prob(prob)){
+return (aux_variance(trials, prob))
+}
+}
+}
+bin_mode <- function(trials, prob){
+if (check_trials(trials)){
+if(check_prob(prob)){
+return (aux_mode(trials, prob))
+}
+}
+}
+bin_skewness <- function(trials, prob){
+if (check_trials(trials)){
+if(check_prob(prob)){
+return (aux_skewness(trials, prob))
+}
+}
+}
+bin_kurtosis <- function(trials, prob){
+if (check_trials(trials)){
+if(check_prob(prob)){
+return (aux_kurtosis(trials, prob))
+}
+}
+}
+bin_distribution(1, 0.7)
+bin_choose(5, 1:3)
+devtools::check()
+devtools::check()
