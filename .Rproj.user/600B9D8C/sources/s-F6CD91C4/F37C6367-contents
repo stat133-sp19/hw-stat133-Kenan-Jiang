@@ -13,7 +13,6 @@ LazyData: false
 Collate:
     private.R
     method.R
-    binomial.R
 RoxygenNote: 6.1.1
 Suggests: knitr,
     rmarkdown,

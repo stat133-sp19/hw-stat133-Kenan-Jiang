@@ -7,8 +7,6 @@
 #' @examples
 #' bin_choose(5, 2)
 #' 5 
-#' bin_choose(5, 1:3)
-#' [1] 5 10 10  
 bin_choose <- function(n, k) {
   for (i in k) {
     if (i > n) {
@@ -30,9 +28,7 @@ bin_choose <- function(n, k) {
 #' @export
 #' @examples
 #' bin_probability(2, 5, 0.5)
-#' 0.3125
 #' bin_probability(0:2, 5, 0.5)
-#' 0.03125 0.15625 0.31250
 bin_probability <- function(success, trials, prob) {
   if (check_trials(trials)) {
     if (check_prob(prob)){
@@ -53,13 +49,7 @@ bin_probability <- function(success, trials, prob) {
 #' @export
 #' @examples
 #' bin_distribution(1, 0.7)
-#' success  probability
-#' 0               0.3         
-#' 1               0.7         
 #' bin_cumulative(1, 0.2)
-#' success  probability
-#' 0               0.8         
-#' 1               0.2        
 bin_distribution <- function(trials, prob) {
   success <- 0:trials
   probability <- bin_probability(success, trials, prob)
@@ -76,13 +66,7 @@ bin_distribution <- function(trials, prob) {
 #' @export
 #' @examples
 #' bin_cumulative(1, 0.7)
-#' success  probability cumulative
-#' 0               0.3         0.3
-#' 1               0.7         1.0
 #' bin_cumulative(1, 0.2)
-#' success  probability cumulative
-#' 0               0.8         0.8
-#' 1               0.2         1.0
 bin_cumulative <- function(trials, prob) {
   success <- 0:trials
   probability <- bin_probability(success, trials, prob)
@@ -102,17 +86,7 @@ bin_cumulative <- function(trials, prob) {
 #' @export
 #' @examples
 #' bin_variable(3, 0.2)
-#' "Binomial variable"
-
-#' Paramaters
-#' - number of trials: 3 
-#' - prob of success: 0.2
 #' bin_variable(3, 0.2)
-#' "Binomial variable"
-
-#' Paramaters
-#' - number of trials: 4 
-#' - prob of success: 0.8
 bin_variable <- function(trials, prob) {
   if (check_trials(trials)){
     if (check_prob(prob)) {
